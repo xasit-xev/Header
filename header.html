@@ -3,51 +3,180 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>KFC Navbar</title>
     <link rel="stylesheet" href="header.css" />
   </head>
   <body>
-    <header class="header">
-      <div class="logo">
-        <nav>
-          <button
-            class="menu-icon"
-            onclick="toggleMenu()"
-            aria-label="Toggle menu"
-          >
-            ☰
-          </button>
+    <header class="navbar">
+      <div class="left-section">
+        <button class="menu-btn" id="menuBtn" type="button">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <a href="https://www.kfcpakistan.com/" class="logo-link">
+          <img src="kfc.png" alt="KFC" class="logo" />
+        </a>
+
+        <nav class="section" aria-label="Order options">
+          <a href="#" class="nav-item active">
+            <img src="delivery.png" alt="" class="icon-img" />
+            <span>DELIVERY</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <img src="package.png" alt="" class="icon-img" />
+            <span>PICKUP</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <img src="items.png" alt="" class="icon-img" />
+            <span>MERCH</span>
+          </a>
         </nav>
-
-        <div class="menu" id="menu">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        Thrive
       </div>
-      <div class="header-links">
-        <a href="#home">Home</a>
-        <a href="https://www.instagram.com/" target="_blank"> About </a>
-        <a href="#courses">Courses</a>
-        <a href="#stories">Stories</a>
-        <a href="#community">Community</a>
-      </div>
-      <div class="action">
-        <span>Login</span>
-        <button class="button">Get Started</button>
+
+      <div class="right-section">
+        <a href="#" class="cart" aria-label="Shopping cart">
+          <img src="bucket.png" alt="" class="bucket" />
+        </a>
+
+        <button class="login-btn" type="button">LOGIN</button>
       </div>
     </header>
 
+    <aside
+      class="sidebar"
+      id="sidebar"
+      aria-label="Main menu"
+      aria-hidden="true"
+      inert
+    >
+      <div class="sidebar-top">
+        <button class="sidebar-login" type="button">LOGIN</button>
+
+        <button
+          class="close-menu"
+          id="closeMenu"
+          type="button"
+          aria-label="Close menu"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="theme-switch">
+        <div class="theme-toggle">
+          <button type="button" class="active" id="dayBtn" aria-pressed="true">
+            Day
+          </button>
+
+          <button type="button" id="nightBtn" aria-pressed="false">
+            Night
+          </button>
+        </div>
+      </div>
+
+      <hr class="sidebar-divider" />
+
+      <nav class="sidebar-links" aria-label="Main links">
+        <a href="#" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-7.2 8-13a8 8 0 1 0-16 0c0 5.8 8 13 8 13Z" />
+              <circle cx="12" cy="9" r="3" />
+            </svg>
+          </span>
+          <span>Store Locator</span>
+        </a>
+
+        <a href="#" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <circle cx="10.5" cy="10.5" r="7.5" />
+              <path d="m16 16 5 5M7 8h7M7 11h5" />
+            </svg>
+          </span>
+          <span>Track Order</span>
+        </a>
+
+        <a href="#" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M8 6h13M8 12h13M8 18h13" />
+              <circle cx="3.5" cy="6" r="1" />
+              <circle cx="3.5" cy="12" r="1" />
+              <circle cx="3.5" cy="18" r="1" />
+            </svg>
+          </span>
+          <span>Explore Menu</span>
+        </a>
+      </nav>
+
+      <hr class="sidebar-divider" />
+
+      <nav class="sidebar-secondary" aria-label="Information links">
+        <a href="#">About Us</a>
+        <a href="#">My Rewards</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+      </nav>
+    </aside>
+
     <script>
-      function toggleMenu() {
-        const menu = document.getElementById("menu");
-        menu.classList.toggle("active");
-        const button = document.querySelector(".menu-icon");
-        button.setAttribute("aria-expanded", menu.classList.contains("active"));
+      const menuBtn = document.getElementById("menuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("menuOverlay");
+      const closeBtn = document.getElementById("closeMenu");
+
+      const dayBtn = document.getElementById("dayBtn");
+      const nightBtn = document.getElementById("nightBtn");
+
+      function openMenu() {
+        sidebar.inert = false;
+        sidebar.setAttribute("aria-hidden", "false");
+        sidebar.classList.add("open");
+        overlay.classList.add("show");
+
+        menuBtn.setAttribute("aria-expanded", "true");
+        menuBtn.setAttribute("aria-label", "Close menu");
+
+        document.body.classList.add("menu-open");
+        closeBtn.focus();
       }
+
+      function closeMenu() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+
+        sidebar.setAttribute("aria-hidden", "true");
+        sidebar.inert = true;
+
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Open menu");
+
+        document.body.classList.remove("menu-open");
+      }
+
+      menuBtn.addEventListener("click", function () {
+        if (sidebar.classList.contains("open")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      closeBtn.addEventListener("click", closeMenu);
+      // overlay.addEventListener("click", closeMenu);
+
+      // document.addEventListener("keydown", function (event) {
+      //   if (event.key === "Escape" && sidebar.classList.contains("open")) {
+      //     closeMenu();
+      //     menuBtn.focus();
+      //   }
+      // });
     </script>
   </body>
 </html>
